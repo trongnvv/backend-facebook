@@ -1,0 +1,648 @@
+/facebook/save-token:
+  post:
+    tags:
+      - Facebook
+    summary: "Save token"
+    description: "[USER FB] Verify token =>>> convert to long term token =>>> save token =>>> subscribe page"
+    security:
+      - Bearer: []
+    parameters:
+      - name: body
+        in: body
+        description: "Access token for save"
+        required: true
+        schema: 
+          type: object
+          required: 
+            - accessToken
+          properties: 
+            accessToken:
+              description: AccessToken facebook
+              type: string
+              example: EAAGcVKgmJp0BABE7cZCX8XGdwJ3kjgSZAgLFCkRVcteMhHLxZAqBRAtqsJJWjKqOtf06IteKsoJbEFXmF9K9LsIe54RRFTwrd8esoBSLZCiUeFTmxz....
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: string
+              example: true
+            accessToken:
+              type: string
+              example: "....."
+      400:
+        description: Failure!
+        schema:
+          type: object
+          properties:
+            success:
+              type: string
+              example: false
+            message:
+              type: string
+              example: "Token expired"
+/facebook/verify-token:
+  post:
+    tags:
+      - Facebook
+    summary: "Verify token"
+    description: "[USER FB] Verify token"
+    security:
+      - Bearer: []
+    parameters:
+      - name: body
+        in: body
+        description: "Access token for save"
+        required: true
+        schema: 
+          type: object
+          required: 
+            - accessToken
+          properties: 
+            accessToken:
+              description: AccessToken facebook
+              type: string
+              example: EAAGcVKgmJp0BABE7cZCX8XGdwJ3kjgSZAgLFCkRVcteMhHLxZAqBRAtqsJJWjKqOtf06IteKsoJbEFXmF9K9LsIe54RRFTwrd8esoBSLZCiUeFTmxz....
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: string
+              example: true
+/facebook/accounts:
+  get:
+    tags:
+      - Facebook
+    summary: "List account facebook"
+    description: "[USER FB] List account facebook was managed"
+    security:
+      - Bearer: []
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            data: 
+              type: object
+              example: "..."
+/facebook/accounts/{id}:
+  delete:
+    tags:
+      - Facebook
+    summary: "List account facebook"
+    description: "[USER FB] List account facebook was managed"
+    parameters:
+    - name: id
+      in: path
+      description: "User facebook id"
+      type: "string"
+      required: true
+    security:
+      - Bearer: []
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      400:
+        description: Failure!
+        schema:
+          type: object
+          properties:
+            success:
+              type: string
+              example: false
+            message:
+              type: string
+              example: "Account facebook not found"  
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            data: 
+              type: object
+              example: "..."
+/facebook/pages:
+  get:
+    tags:
+      - Facebook
+    summary: "List page"
+    description: "[USER FB] List page facebook of user"
+    security:
+      - Bearer: []
+    parameters:
+      - name: id
+        in: query
+        description: "List page in database"
+        type: "string"
+        required: true
+      - name: isClone
+        in: query
+        description: "List page clone from facebook to save database"
+        type: "string"
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            data: 
+              type: array
+              example: "..."
+/facebook/pages/subscribe:
+  post:
+    tags:
+      - Facebook
+    summary: "Subscribe page"
+    description: "Subscribe page to receive data page"
+    security:
+      - Bearer: []
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema: 
+          type: object
+          required: 
+            - pageID
+          properties: 
+            pageID:
+              description: Page facebook id
+              type: string
+              example: '201252998103324'
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: string
+              example: true
+
+/facebook/pages/un-subscribe:
+  post:
+    tags:
+      - Facebook
+    summary: "Un-subscribe page"
+    description: "Un-subscribe page to stop receive data page"
+    security:
+      - Bearer: []
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema: 
+          type: object
+          required: 
+            - pageID
+          properties: 
+            pageID:
+              description: Page facebook id
+              type: string
+              example: '201252998103324'
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: string
+              example: true
+/facebook/live:
+  get:
+    tags:
+      - Facebook
+    summary: "List live"
+    description: "List live facebook of user/page"
+    security:
+      - Bearer: []
+    parameters:
+      - name: id
+        in: query
+        description: "List page in database"
+        type: "string"
+        required: true
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            data: 
+              type: array
+              example: "..."
+/facebook/campaign/all:
+  get:
+    tags:
+      - Facebook
+    summary: "List all live campaign"
+    description: "List all live campaign"
+    security:
+      - Bearer: []
+    parameters:
+      - name: page
+        in: query
+        description: page of list (start at 1)
+        type:  number
+        example: 1
+        default: 1
+      - name: limit
+        in: query
+        description: page size of list
+        type: number
+        default: 10
+      - name: status
+        in: query
+        description: status of campaign (INIT, LIVE, LIVE_FINISH), lấy tất cả truyền '', lấy nhiều status truyền LIVE;LIVE_FINISH
+        type: String
+        default: ''
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            data: 
+              type: object
+              properties:
+                data:
+                  description: list lives
+                total:
+                  description: total list lives
+
+# /facebook/live-create:
+#   post:
+#     tags:
+#       - Facebook
+#     summary: "Live on facebook"
+#     description: "Request live on facebook to response 'rtmps' link"
+#     security:
+#       - Bearer: []
+#     parameters:
+#       - name: body
+#         in: body
+#         required: true
+#         schema: 
+#           type: object
+#           properties: 
+#             pageID:
+#               description: Page facebook id
+#               type: string
+#               example: '201252998103324'
+#             userFacebookID:
+#                 description: user facebook id
+#                 type: string
+#                 example: '201252998103324'
+#             title:
+#                 description: title live stream
+#                 type: string
+#                 example: title
+#             description:
+#                 description: description live stream
+#                 type: string
+#                 example: description
+#     responses:
+#       401:
+#         $ref: "#/definitions/BaseRes/401"
+#       403:
+#         $ref: "#/definitions/BaseRes/403"
+#       422:
+#         $ref: "#/definitions/BaseRes/422"
+#       200:
+#         description: Success!
+#         schema:
+#           type: object
+#           properties:
+#             success:
+#               type: string
+#               example: true
+#             data:
+#               type: object
+#               properties:
+#                 liveID:
+#                   type: string
+#                   example: "5432758923479"
+#                 streamURL:
+#                   type: string
+#                   example: rtmps://live-api-s.facebook.com:443/rtmp/....
+#                 secureStreamURL:
+#                   type: string
+#                   example: rtmps://live-api-s.facebook.com:443/rtmp/....
+/facebook/live-finish/{id}:
+  post:
+    tags:
+      - Facebook
+    summary: "Finish live"
+    description: "Request stop live on facebook"
+    security:
+      - Bearer: []
+    parameters:
+      - name: id
+        in: path
+        description: "Live id"
+        type: "string"
+        required: true
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: string
+              example: true
+/facebook/campaign:
+  get:
+    tags:
+      - Facebook
+    summary: "List campaign"
+    description: "List campaign"
+    security:
+      - Bearer: []
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            data: 
+              type: array
+              items:
+                properties:
+                  status:
+                    type: string
+                    example: INIT
+                  title:
+                    type: string
+                    example: "title"
+                  description:
+                    type: string
+                    example: description
+                  inputURL:
+                    type: string
+                    example: rtmp://118.69.18.225:1935/live/...
+  post:
+    tags:
+      - Facebook
+    summary: "Create multi live on facebook"
+    description: "Request multi live on facebook to response 'rtmps' link"
+    security:
+      - Bearer: []
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema: 
+          type: object
+          properties: 
+            ids:
+              description: "List id page/user"
+              type: array
+              example: 
+                - '201252998103323'
+                - '201252998103324'
+            title:
+                description: title live stream
+                type: string
+                example: title
+            description:
+                description: description live stream
+                type: string
+                example: description
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: string
+              example: true
+            data: 
+              type: object
+              properties:
+                listLive:
+                  type: array
+                  items:
+                    properties:
+                      liveID:
+                        type: string
+                        example: "5432758923479"
+                      streamURL:
+                        type: string
+                        example: rtmps://live-api-s.facebook.com:443/rtmp/....
+                      secureStreamURL:
+                        type: string
+                        example: rtmps://live-api-s.facebook.com:443/rtmp/....
+                campaign:
+                  type: object
+                  properties:
+                    inputURL: 
+                      type: string
+                      example: rtmp://118.69.18.225:1935/live/.....
+/facebook/campaign/{id}/live-finish:
+  post:
+    tags:
+      - Facebook
+    summary: "Finish live of campaign"
+    description: "Request stop live on server ffmpeg"
+    security:
+      - Bearer: []
+    parameters:
+      - name: id
+        in: path
+        description: "Campaign id"
+        type: "string"
+        required: true
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: string
+              example: true
+/facebook/campaign/{id}/comment:
+  post:
+    tags:
+      - Facebook
+    summary: "Comment to facebook of campaign"
+    description: "Comment to all pages post facebook"
+    security:
+      - Bearer: []
+    parameters:
+      - name: id
+        in: path
+        description: "Campaign id"
+        type: "string"
+        required: true
+      - name: body
+        in: body
+        required: true
+        schema: 
+          type: object
+          required: 
+            - message
+          properties: 
+            message:
+              description: message
+              type: string
+              example: new-message
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: string
+              example: true
+/facebook/live/{id}/comment:
+  post:
+    tags:
+      - Facebook
+    summary: "Comment to facebook of live"
+    description: "Comment to only one live post facebook"
+    security:
+      - Bearer: []
+    parameters:
+      - name: id
+        in: path
+        description: "Live id"
+        type: "string"
+        required: true
+      - name: body
+        in: body
+        required: true
+        schema: 
+          type: object
+          required: 
+            - message
+          properties: 
+            message:
+              description: message
+              type: string
+              example: new-message
+    responses:
+      401:
+        $ref: "#/definitions/BaseRes/401"
+      403:
+        $ref: "#/definitions/BaseRes/403"
+      422:
+        $ref: "#/definitions/BaseRes/422"
+      200:
+        description: Success!
+        schema:
+          type: object
+          properties:
+            success:
+              type: string
+              example: true

@@ -1,0 +1,31 @@
+{
+  "swaggerDefinition": {
+    "info": {
+      "title": "API on K8S",
+      "version": "1.0.0",
+      "description": "SCP API"
+    },
+    "host": "fb.trongnv",
+    "basePath": "/api/v1/scp",
+    "schemes": [
+      "https"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "securityDefinitions": {
+      "Bearer": {
+        "description": "'Authorization' header : Bearer: xxxxxx.yyyyyyy.zzzzzz\n\n",
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "apis": [
+    "./src/*/*"
+  ]
+}

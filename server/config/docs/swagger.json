@@ -1,0 +1,23 @@
+{
+  "swaggerDefinition": {
+    "info": {
+      "title": "API on LOCALHOST",
+      "version": "1.0.0",
+      "description": "SCP API"
+    },
+    "host": "localhost",
+    "basePath": "/api/v1",
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "securityDefinitions": {
+      "Bearer": {
+        "description": "'Authorization' header : Bearer: xxxxxx.yyyyyyy.zzzzzz\n\n",
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "apis": ["./src/*/*"]
+}
