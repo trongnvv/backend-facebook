@@ -12,7 +12,7 @@
     "lint": "eslint . --ext .js -f ./.eslintformatter.js; exit 0",
     "lint:fix": "eslint . --ext .js -f ./.eslintformatter.js --fix; exit 0",
     "lint:staged": "lint-staged",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --detectOpenHandles --forceExit"
   },
   "repository": {
     "type": "git",
@@ -60,5 +60,9 @@
       "npm run lint:fix",
       "git add"
     ]
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "supertest": "^5.0.0"
   }
 }
