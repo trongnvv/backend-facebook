@@ -27,7 +27,7 @@ app.use((req, _, next) => {
   next();
 });
 app.use(logger('dev'));
-app.use(routers);
+app.use("/api/v1", routers);
 app.use(errorHandle);
 
 module.exports = app;
