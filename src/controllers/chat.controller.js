@@ -2,6 +2,11 @@ const hsc = require('http-status-codes');
 const { get } = require('lodash');
 const facebookService = require('../services/facebook.service');
 const { HOST_CHAT_BACKEND } = require("../../config");
+// TODO create facebookSDK
+const facebookSDK = {
+  getPageAccessToken: () => { },
+  getPageInfo: () => { },
+}
 const seen = async (req, res, next) => {
   const { psid, pageID } = req.body;
   const accessToken = await facebookSDK.getPageAccessToken(req, pageID);
