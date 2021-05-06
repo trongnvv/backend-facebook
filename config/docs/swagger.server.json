@@ -3,10 +3,10 @@
     "info": {
       "title": "API on K8S",
       "version": "1.0.0",
-      "description": "SCP API"
+      "description": "TRONGNV API"
     },
     "host": "fb.trongnv",
-    "basePath": "/api/v1/scp",
+    "basePath": "/api/v1",
     "schemes": [
       "https"
     ],

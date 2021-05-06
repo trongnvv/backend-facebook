@@ -253,6 +253,79 @@ module.exports = {
       }
     );
   },
+  sendPrivateReply: async (data) => {
+    try {
+      const rs = await fetchAPI(`${FACEBOOK_HOST}/me/messages`, 'POST', null, data);
+      return rs;
+    } catch (error) {
+      console.log('sendPrivateReply', data, get(error, "response.data"));
+      return { error }
+    }
+  },
+  sendStandard: async (data) => {
+    try {
+      const rs = await fetchAPI(`${FACEBOOK_HOST}/me/messages`, 'POST', null, data);
+      return rs;
+    } catch (error) {
+      console.log('sendMessageStandard error: ', data, get(error, "response.data"));
+      return { error }
+    }
+  },
+  fetchMessages: async ({ accessToken, conversationID, before, after }) => {
+    try {
+      const data = {
+        access_token: accessToken,
+        fields: "created_time,id,from,message",
+        limit: 30
+      };
+      if (before) data.before = before;
+      if (after) data.after = after;
+      const rs = await fetchAPI(`${FACEBOOK_HOST}/${conversationID}/messages`, "GET", null, null, data);
+      return rs;
+    } catch (error) {
+      console.log('fetchMessagePage', conversationID, get(error, "response.data"));
+      return { error }
+    }
+  },
+  fetchConversations: async ({ accessToken, pageFBID, before, after }) => {
+    try {
+      const data = {
+        access_token: accessToken,
+        fields: "unread_count,snippet,message_count,link,updated_time,participants",
+        limit: 30
+      };
+      if (before) data.before = before;
+      if (after) data.after = after;
+      const rs = await fetchAPI(`${FACEBOOK_HOST}/${pageFBID}/conversations`, "GET", null, null, data);
+      return { ...rs, pageFacebookID: pageFBID };
+    } catch (error) {
+      console.log('fetchMessagePage', pageFBID, get(error, "response.data"));
+      return { error }
+    }
+  },
+  fetchMessagesByPSID: async ({ accessToken, pageFBID, psid }) => {
+    try {
+      const data = {
+        access_token: accessToken,
+        fields: "message_count,link,id,snippet,subject,wallpaper,can_reply,participants,messages.limit(30){message,attachments.limit(1000){file_url,image_data,id,mime_type,name,size,video_data},from,sticker,id,created_time}",
+        user_id: psid
+      };
+      const results = await fetchAPI(`${FACEBOOK_HOST}/${pageFBID}/conversations`, "GET", null, null, data);
+      const rs = get(results, "data.[0]", {});
+      return {
+        messageCount: rs.message_count,
+        link: 'https://facebook.com' + rs.link,
+        conversationID: rs.id,
+        snippet: rs.snippet,
+        canReply: rs.can_reply,
+        participants: rs.participants,
+        messages: rs.messages,
+      };
+    } catch (error) {
+      console.log('fetchMessagesByPSID', pageFBID, get(error, "response.data"));
+      return { error }
+    }
+  },
   listenFacebookEvent: ({ liveID, accessToken, postID }) => {
     console.log('listenFacebookEvent', liveID, accessToken);
 

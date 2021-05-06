@@ -5,4 +5,6 @@ module.exports = {
   LiveFacebookModel: require("./LiveFacebook"),
   CampaignFacebookModel: require("./CampaignFacebook"),
   UserModel: require("./User"),
+  MessageRefModel: require('./MessageRef'),
+  MessageReceiveModel: require('./MessageReceive'),
 };
